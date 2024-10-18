@@ -4,7 +4,7 @@ public class LinearCalculator{
     //you should copy and paste all of your code from the LinearCalculator class
     // but NOT printInfo(). Please update it below
     //INSTANCE VARIABLES 
-    //4 INTEGER variables (name them: x1,x2,y1,y2) 
+    //4 INTEGER variables (name them: x1,x2,y1,y2)
     private int x1;
     private int y1;
     private int x2;
@@ -48,8 +48,8 @@ public class LinearCalculator{
     //calculates the y intercept of the equation and returns the value to the nearest HUNDREDTH
     //if y-int if undefined, should return -999.99
     public double yInt(){
-        if ((x2 - x1) != 0) {
-            return roundedToHundredth(y1 - (x1 * slope()));
+        if ((x2 - x1) != 0) { // executes if slope is not undefined
+            return roundedToHundredth(y1 - (x1 * slope())); // uses the first point and the slope to calculate y Intercept working backwards
         }
         return -999.99;
     }
@@ -59,7 +59,7 @@ public class LinearCalculator{
     //if slope is undefined, should return -999.99
     public double slope(){
         if ((x2 - x1) != 0) {
-            return roundedToHundredth((double) (y2 - y1) / (x2 - x1));
+            return roundedToHundredth((double) (y2 - y1) / (x2 - x1)); // divides the y difference by the y difference (rise over run)
         }
         return -999.99;
     }
@@ -71,28 +71,29 @@ public class LinearCalculator{
     public String equation(){
         double slope = slope();
         double yInt = yInt(); 
-        if (slope == -999.99) {
+        if (slope == -999.99) { // checks if slope is undefined (in which case it returns undefined immediately)
             return "undefined";
         }
-        String str = "y=";
+        String str = "y="; // starts equation with y=
         if (slope != 0) {
-            str += slope + "x";
+            str += slope + "x"; // adds the slope and x if the slope isn't zero
 
             if (yInt > 0) {
-                str += "+";
+                str += "+"; // adds a plus if the slope isn't zero and the yInt is > 0 (not < 0 because negatives already include a - sign)
             }
         }
         if (yInt != 0) {
-            str += yInt;
+            str += yInt; // adds the y-Int if it's not zero
         }
-        return str;
+        return str; // returns the final equation
     }
+
 
     //roundedToHundredth(double x)-> returns double
     //calculates the input to the nearest hundredth and returns that value
     public double roundedToHundredth(double x){
-        if (x > 0) {
-            return (int) (x * 100 + 0.5) / 100.0;
+        if (x > 0) { // checks if x is > or <= 0 to decide whether to add or subtract 0.5
+            return (int) (x * 100 + 0.5) / 100.0; // uses multiplication, casting, & division to round to 2 ints
         }
         return (int) (x * 100 - 0.5) / 100.0;
     }
@@ -100,8 +101,15 @@ public class LinearCalculator{
     //You will need to concatenate to the string 
     //the results from findSymmetry() and Midpoint()
     public String printInfo(){
-    
-        return "";
+        String str = "The two points are: (" + x1 + "," + y1  + ")"; // ever line simply uses functions and values to append to the given strings
+        str += " and " + "(" + x2 + "," + y2 + ")";
+        str += "\nThe equation of the line between these points is: " + equation();
+        str += "\nThe slope of this line is: " + slope();
+        str += "\nThe y-intercept of the line is: " + yInt();
+        str += "\nThe distance between the two points is: " + distance();
+        str += "\n" + findSymmetry();
+        str += "\n" + Midpoint();
+        return str;
     }
 
     //findSymmetry()-> returns a string 
@@ -112,31 +120,29 @@ public class LinearCalculator{
     //return "Symmetric about the origin";
     //return "No symmetry";
     public String findSymmetry(){
-        boolean xEqual = (x1 == x2);
-        boolean yEqual = (y1 == y2);
-        boolean xNeg = (x1 * -1 == x2);
-        boolean yNeg = (y1 * -1 == y2);
+        boolean xEqual = (x1 == x2); // checks if both x's are the same
+        boolean yEqual = (y1 == y2); // checks if both y's are the same
+        boolean xNeg = (x1 * -1 == x2); // checks if the x's are opposite
+        boolean yNeg = (y1 * -1 == y2); // checks if the y's are opposite
         if (xNeg && yNeg) {
-            return "Symmetric about the origin";
+            return "Symmetric about the origin"; // only if both x's and both y's are opposite
         }
         if (xNeg && yEqual) {
-            return "Symmetric about the x-axis";
+            return "Symmetric about the y-axis"; // only if x's are opposite and y's are equal
         }
         if (xEqual && yNeg) {
-            return "Symmetric about the origin";
+            return "Symmetric about the x-axis"; // only if x's are equal and y's are opposite
         }
-        else {
-            return "No symmetry";
-        }
+        return "No symmetry"; // all other cases
     }
 
     //Midpoint()->return a string 
     //the method should calculate the midpoint between the two points
     //it should return "The midpoint of this line is: (0,0)";
     public String Midpoint(){
-        double midX = (x1 + x2) / 2.0;
-        double midY = (y1 + y2) / 2.0;
-        return "The midpoint of this line is: (" + midX + "," + midY + ")";
+        double midX = (x1 + x2) / 2.0; // gets the average of both x's
+        double midY = (y1 + y2) / 2.0; // gets the average of both y's
+        return "The midpoint of this line is: (" + midX + "," + midY + ")"; // returns midpoint
     }
 
 }
